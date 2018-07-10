@@ -14,6 +14,18 @@ function getSheetUrl() {
   return url;
 }
 
+function getSheetUrlByName(shName) {
+  var SS = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = SS.getSheetByName(shName);
+  var url = '';
+  url += SS.getUrl();
+  url += '#gid=';
+  url += ss.getSheetId(); 
+  return url;
+}
+
+
+
 function columnToLetter(column)
 {
   var temp, letter = '';

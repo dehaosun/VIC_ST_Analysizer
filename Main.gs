@@ -65,7 +65,8 @@ function processChange(rng){
     
   
     if(namedTag === "_I_ST_NAME"){
-          
+      
+      range.activate()
       syncCache_StockChange();  
       var stockName = getCache_NamedTagValue('_I_ST_NAME');
       //if not empty and valid
@@ -551,5 +552,38 @@ function syncCache_AddressToNamedRng(){
 
 }
 
+
+function syncStockInfo(){
+  
+  var trgSh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Stock_TmpInfo');
+  
+  var tag = '_CFG_ST_INFO_URL';
+  var rng = getRangeByNamedTag(tag);
+  
+  var url = rng.getValue();
+  
+  var srcWB = SpreadsheetApp.openByUrl(url);
+  var srcSh = srcWB.getSheetByName('Summary');
+  
+  
+  
+  var SRange = srcSh.getDataRange();
+
+  // get A1 notation identifying the range
+  var A1Range = SRange.getA1Notation();
+
+  // get the data values in range
+  var SData = SRange.getValues();
+
+  // Clear the Google Sheet before copy
+  trgSh.clear({contentsOnly: true});
+
+  // set the target range to the values of the source data
+  trgSh.getRange(A1Range).setValues(SData);
+  
+  
+  
+  
+}
 
 
