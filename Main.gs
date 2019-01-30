@@ -1,3 +1,18 @@
+/**
+    This script is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    any later version.
+
+    This script is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along.  If not, see <https://opensource.org/licenses/GPL-3.0>.
+ **/
+
 function onEdit(e){
   var rng = e.range;
   processChange(rng);
@@ -426,10 +441,10 @@ function syncCacheAuto(){
 
 function syncCacheAll(){
   changeStatusDirectly(3,true);
-
+  syncCache_AddressToNamedRng();
   syncCache_NamedRngToSheetCol('ListRecorder');
   syncCache_NamedRngToSheetCol('WatchList');
-  syncCache_AddressToNamedRng();
+  
   var cache = CacheService.getDocumentCache();
   
   syncCache_StockChange();
@@ -498,7 +513,7 @@ function syncCache_NamedRngToSheetCol(shName){
       var curRng = tagRng.getCell(i,j)     
       if(!curRng.isBlank()){
         var curTag = curRng.getValue();
-        var testRng = SpreadsheetApp.getActiveSpreadsheet().getRangeByName(curTag);
+        var testRng = getCachedRangeByNamedTag(curTag);
         if(testRng === null ){
           //color rng
           if(curTag.indexOf('_')>=0){
